@@ -56,14 +56,14 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-200 to-white">
-      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-center mb-16"
         >
           <FiBookOpen className="w-12 h-12 text-green-600 mr-4" />
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent pb-4" >
             Sustainable Stubble Insights
           </h1>
         </motion.div>

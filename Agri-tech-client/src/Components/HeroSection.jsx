@@ -38,7 +38,7 @@ const HeroSection = () => {
       {/* Services and Highlights Section */}
       <div className="relative z-10 w-11/12 max-w-5xl grid md:grid-cols-2 gap-8 mt-16">
         {/* Services Offered Card - Slides in from left */}
-        <div className="bg-white/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-white/20 hover:shadow-green-200/30 transition-shadow duration-300 transform transition-all duration-1000 ease-out translate-x-[-50px] opacity-0 animate-slide-in delay-600">
+        <div className="bg-white/95 p-8 rounded-2xl shadow-2xl backdrop-blur-sm border border-white/20 hover:shadow-green-200/30  transform transition-all duration-1000 ease-out translate-x-[-50px] opacity-0 animate-slide-in delay-600">
           {/* Favicon-like icon next to the heading */}
           <div className="flex items-center justify-center space-x-3 mb-4">
             <FaLeaf className="text-3xl text-green-600" /> {/* Leaf icon */}
@@ -73,7 +73,7 @@ const HeroSection = () => {
         </div>
 
         {/* Impact Card - Slides in from right */}
-        <div className="bg-gradient-to-br from-yellow-400 to-orange-400 p-8 rounded-2xl shadow-2xl hover:shadow-yellow-200/30 transition-shadow duration-300 transform transition-all duration-1000 ease-out translate-x-[50px] opacity-0 animate-slide-in delay-800">
+        <div className="bg-gradient-to-br from-yellow-400 to-orange-400 p-8 rounded-2xl shadow-2xl hover:shadow-yellow-200/30  transform transition-all duration-1000 ease-out translate-x-[50px] opacity-0 animate-slide-in delay-800">
           <h2 className="text-2xl font-bold mb-4 text-white">Our Impact</h2>
           <p className="text-lg text-white/90 mb-6">
             Helping reduce pollution & increase farmer earnings
