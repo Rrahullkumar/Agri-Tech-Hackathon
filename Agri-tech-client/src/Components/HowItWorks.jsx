@@ -59,7 +59,7 @@ const HowItWorks = () => {
       icon: <FaWallet className="text-3xl text-orange-300" />,
       title: "5. Secure Booking",
       description: "8% advance payment to confirm order. Fully refundable if we cancel.",
-      image: "/assets/agri-1.png",
+      image: "/assets/stubble-2.webp",
     },
     {
       icon: <FaShieldAlt className="text-3xl text-red-300" />,

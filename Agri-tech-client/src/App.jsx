@@ -9,6 +9,10 @@ import Footer from "./Components/Footer";
 import SellerLogin from "./Pages/SellerLogin"; 
 import BuyerLogin from "./Pages/BuyerLogin";
 import LogisticsLogin from "./Pages/LogisticsLogin";
+import BuyStubble from "./Pages/BuyStubble";
+import SellStubble from "./Pages/SellStubble";
+import Blog from "./Pages/Blog";
+import Logistics from "./Pages/Logistics";
 
 const DummyPage = ({ title }) => (
   <div className="min-h-screen flex items-center justify-center text-3xl font-bold bg-green-50">
@@ -39,12 +43,13 @@ function App() {
         <Route path="/seller-login" element={<SellerLogin />} />
         <Route path="/buyer-login" element={<BuyerLogin />} />
         <Route path="/logistics-login" element={<LogisticsLogin />} />
-        <Route path="/sell-stubble" element={<DummyPage title="Sell Stubble" />} />
-        <Route path="/buy-stubble" element={<DummyPage title="Buy Stubble" />} />
+        <Route path="/sell-stubble" element={<SellStubble />} />
+        <Route path="/buy-stubble" element={<BuyStubble />} />
+        <Route path="/logistics" element={<Logistics />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/blog" element={<DummyPage title="Blog" />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/signup" element={<DummyPage title="Signup" />} />
+        <Route path="/signup" element={<SellerLogin />} />
       </Routes>
     </Router>
   );

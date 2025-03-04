@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import {
   FaHandshake,
   FaSearchDollar,
@@ -11,6 +12,7 @@ import {
 const OurServices = () => {
   const sectionRef = useRef(null);
   const cardRefs = useRef([]);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const services = [
     {
@@ -18,36 +20,42 @@ const OurServices = () => {
       title: "Stubble Selling Platform",
       description:
         "Connect with verified buyers and sell your stubble quickly and efficiently. Our platform simplifies the process, ensuring fair prices and timely pickup.",
+      path: "/sell-stubble", // Add path for navigation
     },
     {
       icon: <FaSearchDollar className="w-12 h-12 text-yellow-500" />,
       title: "Stubble Buying Platform",
       description:
         "Find high-quality stubble from trusted sellers. Browse listings, compare prices, and purchase the stubble you need for your agricultural or industrial purposes.",
+      path: "/buy-stubble", // Add path for navigation
     },
     {
       icon: <FaTruck className="w-12 h-12 text-blue-500" />,
       title: "Transportation and Logistics",
       description:
         "We offer reliable transportation and logistics services to ensure the safe and efficient delivery of stubble from seller to buyer.",
+      path: "/logistics-login", // Add path for navigation
     },
     {
       icon: <FaBarcode className="w-12 h-12 text-purple-500" />,
       title: "Stubble Processing and Baling",
       description:
         "We provide professional stubble processing and baling services to prepare stubble for efficient storage and transportation.",
+      path: "/logistics-login", // Add path for navigation
     },
     {
       icon: <FaLeaf className="w-12 h-12 text-green-500" />,
       title: "Advisory and Consultation",
       description:
         "Our team of agricultural experts provides advisory and consultation services on stubble management, sustainable farming practices, and the benefits of stubble utilization.",
+      path: "/about-us", // Add path for navigation
     },
     {
       icon: <FaBookOpen className="w-12 h-12 text-orange-500" />,
       title: "Information and Resources",
       description:
         "Access a wealth of information and resources on stubble management, including articles, guides, and FAQs.",
+      path: "/blog", // Add path for navigation
     },
   ];
 
@@ -91,6 +99,7 @@ const OurServices = () => {
               key={index}
               ref={(el) => (cardRefs.current[index] = el)}
               className="service-card group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:scale-105 cursor-pointer border border-green-100 opacity-0"
+              onClick={() => navigate(service.path)} // Navigate to the specified path
             >
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4">{service.icon}</div>

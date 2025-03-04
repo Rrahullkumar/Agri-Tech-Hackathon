@@ -33,12 +33,13 @@ const Navbar = () => {
           <Link to="/" className="nav-link">Home</Link>
           
           {/* Services Dropdown */}
-          <div className="relative" onMouseEnter={() => setServicesDropdownOpen(true)} onMouseLeave={() => setServicesDropdownOpen(false)}>
+          <div className="relative" onMouseEnter={() => setServicesDropdownOpen(true)} onClick={() => setServicesDropdownOpen(false)}>
             <button className="nav-link">Our Services</button>
             {isServicesDropdownOpen && (
               <div className="dropdown-menu">
                 <Link to="/sell-stubble" className="dropdown-item">Sell Stubble</Link>
                 <Link to="/buy-stubble" className="dropdown-item">Buy Stubble</Link>
+                <Link to="/logistics" className="dropdown-item">Logistics</Link>
               </div>
             )}
           </div>

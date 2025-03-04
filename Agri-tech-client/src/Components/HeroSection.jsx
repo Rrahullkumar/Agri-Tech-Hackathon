@@ -55,7 +55,7 @@ const HeroSection = () => {
               <span className="text-green-500">
                 <FaSearch className="text-green-500" />
               </span>
-              <span>Buyers search & place bids</span>
+              <span>Buyers search & place orders</span>
             </li>
             <li className="flex items-center space-x-3">
               <span className="text-green-500">
