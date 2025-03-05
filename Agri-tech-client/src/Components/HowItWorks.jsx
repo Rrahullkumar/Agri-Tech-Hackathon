@@ -70,7 +70,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-800 to-gray-600 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-r from-gray-800 to-gray-600 py-16 px-4 sm:px-6 lg:px-8 pt-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-center text-white mb-16 animate-on-scroll opacity-0">
           How It Works
