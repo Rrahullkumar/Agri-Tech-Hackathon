@@ -46,7 +46,7 @@ const HowItWorks = () => {
       icon: <FaMoneyBillWave className="text-3xl text-yellow-300" />,
       title: "3. Get Paid Securely",
       description:
-        "Receive 70% upfront with balance after delivery. Transparent payment tracking.",
+        "Receive 90% upfront with balance after delivery. Transparent payment tracking.",
       image: "/assets/payment.jpg",
     },
     {
@@ -58,7 +58,7 @@ const HowItWorks = () => {
     {
       icon: <FaWallet className="text-3xl text-orange-300" />,
       title: "5. Secure Booking",
-      description: "8% advance payment to confirm order. Fully refundable if we cancel.",
+      description: "50% advance payment to confirm order. Fully refundable if cancels.",
       image: "/assets/stubble-2.webp",
     },
     {

@@ -13,6 +13,7 @@ import BuyStubble from "./Pages/BuyStubble";
 import SellStubble from "./Pages/SellStubble";
 import Blog from "./Pages/Blog";
 import Logistics from "./Pages/Logistics";
+import WorkshopDemo from "./Pages/Workshop-Demo";
 
 const DummyPage = ({ title }) => (
   <div className="min-h-screen flex items-center justify-center text-3xl font-bold bg-green-50">
@@ -49,6 +50,7 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/workshop-demo" element={<WorkshopDemo />} />
         <Route path="/signup" element={<SellerLogin />} />
       </Routes>
     </Router>

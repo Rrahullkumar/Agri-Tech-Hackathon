@@ -110,6 +110,9 @@ const Navbar = () => {
           <Link to="/about-us" className="nav-link">
             About Us
           </Link>
+          <Link to="/workshop-Demo" className="nav-link">
+            Workshop and demo
+          </Link>
         </div>
 
         {/* Login Dropdown */}
