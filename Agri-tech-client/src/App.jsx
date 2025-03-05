@@ -14,6 +14,7 @@ import SellStubble from "./Pages/SellStubble";
 import Blog from "./Pages/Blog";
 import Logistics from "./Pages/Logistics";
 import WorkshopDemo from "./Pages/Workshop-Demo";
+import Chatbot from "./Pages/Chat-bot";
 
 const DummyPage = ({ title }) => (
   <div className="min-h-screen flex items-center justify-center text-3xl font-bold bg-green-50">
@@ -51,6 +52,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/workshop-demo" element={<WorkshopDemo />} />
+        <Route path="/Chat-bot" element={<Chatbot />} />
         <Route path="/signup" element={<SellerLogin />} />
       </Routes>
     </Router>
