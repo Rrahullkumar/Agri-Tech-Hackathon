@@ -114,7 +114,7 @@ const SellStubble = () => {
     // Update image URLs to include /uploads/ path
     const getImageUrl = (imagePath) => {
         if (!imagePath) return '/placeholder.jpg';
-        
+
         // Extract just the filename from the absolute path
         const filename = imagePath.split('\\').pop().split('/').pop();
         return `http://localhost:5000/uploads/${filename}`;
@@ -128,6 +128,47 @@ const SellStubble = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-green-50 to-emerald-100 py-12 px-4 sm:px-6 lg:px-8 pt-20">
+
+            <div>
+                <div className="text-center text-3xl font-bold text-green-900 mb-6">
+                    Know the Best Price for Your Stubble
+                </div>
+
+                {/* Banner */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="relative bg-gradient-to-r from-yellow-400 via-green-500 to-green-700 rounded-3xl shadow-xl p-8 mb-12 text-white overflow-hidden mx-4"
+                >
+                    <div
+                        className="absolute inset-0 opacity-30 bg-cover bg-center rounded-3xl"
+                        style={{
+                            backgroundImage:
+                                "url(https://images.unsplash.com/photo-1578329848253-02ad2083c202)",
+                        }}
+                    ></div>
+
+                    <div className="relative z-10">
+                        <h2 className="text-4xl font-extrabold text-center mb-4 drop-shadow-lg">
+                            Get the Best Value for Your Stubble!
+                        </h2>
+                        <p className="text-lg text-center mb-6 drop-shadow-md">
+                            Use our AI-powered tool to predict the optimal price for your stubble and maximize your profit.
+                        </p>
+                        <div className="flex justify-center">
+                            <button
+                                onClick={() => window.location.href = "https://stubble-price-prediction.streamlit.app/"}
+                                className="bg-white text-green-700 font-semibold py-3 px-8 rounded-full shadow-md hover:bg-green-100 transition ease-in-out duration-300 hover:cursor-pointer"
+                            >
+                                Predict Price Now
+                            </button>
+                            {/* Add link integration here */}
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+
+
             <div className="max-w-7xl mx-auto">
                 <motion.h1
                     initial={{ opacity: 0, y: -20 }}
@@ -341,15 +382,15 @@ const SellStubble = () => {
                                     <div className="flex gap-4">
                                         {listing.images[0] && (
                                             <img
-                                            src={getImageUrl(listing.images[0])}
-                                            alt="Stubble"
-                                            className="w-32 h-32 rounded-lg object-cover"
-                                            onError={(e) => {
-                                                console.error('Image failed to load:', e.target.src);
-                                                // Use a data URI for a simple placeholder
-                                                e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3Ctext x='50' y='50' font-family='Arial' font-size='12' text-anchor='middle' dominant-baseline='middle' fill='%23aaa'%3ENo Image%3C/text%3E%3C/svg%3E";
-                                            }}
-                                        />
+                                                src={getImageUrl(listing.images[0])}
+                                                alt="Stubble"
+                                                className="w-32 h-32 rounded-lg object-cover"
+                                                onError={(e) => {
+                                                    console.error('Image failed to load:', e.target.src);
+                                                    // Use a data URI for a simple placeholder
+                                                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3Ctext x='50' y='50' font-family='Arial' font-size='12' text-anchor='middle' dominant-baseline='middle' fill='%23aaa'%3ENo Image%3C/text%3E%3C/svg%3E";
+                                                }}
+                                            />
                                         )}
                                         <div className="flex-1">
                                             <h3 className="text-xl font-semibold text-green-800 capitalize">
