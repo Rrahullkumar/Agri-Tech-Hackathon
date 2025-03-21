@@ -6,7 +6,7 @@ import OurServices from "./Components/OurServices";
 import HowItWorks from "./Components/HowItWorks";
 import AboutUs from "./Components/AboutUs";
 import Footer from "./Components/Footer";
-import SellerLogin from "./Pages/SellerLogin"; 
+import SellerLogin from "./Pages/SellerLogin";
 import BuyerLogin from "./Pages/BuyerLogin";
 import LogisticsLogin from "./Pages/LogisticsLogin";
 import BuyStubble from "./Pages/BuyStubble";
@@ -14,7 +14,9 @@ import SellStubble from "./Pages/SellStubble";
 import Blog from "./Pages/Blog";
 import Logistics from "./Pages/Logistics";
 import WorkshopDemo from "./Pages/Workshop-Demo";
-import Chatbot from "./Pages/Chat-bot";
+import Chatbot from "./Pages/Chat-bot";  
+import AIBot from "./Components/AIbot";
+import "./i18.js";
 
 const DummyPage = ({ title }) => (
   <div className="min-h-screen flex items-center justify-center text-3xl font-bold bg-green-50">
@@ -55,6 +57,10 @@ function App() {
         <Route path="/Chat-bot" element={<Chatbot />} />
         <Route path="/signup" element={<SellerLogin />} />
       </Routes>
+
+      {/* Sticky ChatBot */}
+      <AIBot />
+      
     </Router>
   );
 }

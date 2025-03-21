@@ -35,6 +35,26 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+
+  // useEffect(()=>{
+  //   const script = document.createElement("script");
+  //   script.src =  "https://cdn.jsdelivr.net/npm/google-translate-api-extended@2.3.1/index.min.js";
+  //   document.body.appendChild(script);
+
+    // window.googleTranslateElementInit= () => {
+
+    // }
+
+  //   new google.translate.TranslateElement(
+  //     {
+  //       pageLanguage: "en",
+  //       includedLanguages: "en, es, fr, hi",
+  //       layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+  //     },
+  //     "google_translate_element"
+  //   )
+  // },[])
+
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 p-4 flex justify-between items-center backdrop-blur-md bg-white/30 transition-transform duration-300 ${

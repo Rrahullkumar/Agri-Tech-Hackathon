@@ -1,30 +1,123 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence } from 'framer-motion';
-import { FiUploadCloud, FiInfo } from 'react-icons/fi';
+import { FiUploadCloud, FiInfo, FiTrash2 } from 'react-icons/fi';
 import { MdCurrencyRupee } from 'react-icons/md';
 
 const SellStubble = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [previewImages, setPreviewImages] = useState([]);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
     const [listings, setListings] = useState([]);
+
+    // Fetch existing listings on component mount
+    useEffect(() => {
+        const fetchListings = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/listings');
+                const data = await response.json();
+                setListings(data);
+            } catch (error) {
+                console.error('Error fetching listings:', error);
+            }
+        };
+        fetchListings();
+    }, []);
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
+
+        // Limit to 5 images
+        if (files.length + previewImages.length > 5) {
+            alert('Maximum 5 photos allowed');
+            return;
+        }
+
         const previews = files.map(file => URL.createObjectURL(file));
-        setPreviewImages([...previewImages, ...previews]);
+        setPreviewImages(prev => [...prev, ...previews]);
+        setUploadedFiles(prev => [...prev, ...files]);
     };
 
-    const onSubmit = (data) => {
-        const newListing = {
-            ...data,
-            images: previewImages,
-            id: Date.now(),
-            date: new Date().toLocaleDateString()
-        };
-        setListings([...listings, newListing]);
-        setPreviewImages([]);
+    const onSubmit = async (data) => {
+        try {
+            const formData = new FormData();
+
+            // Append form data
+            Object.entries(data).forEach(([key, value]) => {
+                formData.append(key, value);
+                console.log(key, value); // Log form data
+            });
+
+            // Append image files
+            uploadedFiles.forEach(file => {
+                formData.append('images', file);
+                console.log('Image file:', file); // Log image files
+            });
+
+            const response = await fetch('http://localhost:5000/api/listings', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json(); // Parse error response
+                console.error('Backend error:', errorData);
+                throw new Error(errorData.message || 'Failed to create listing');
+            }
+
+            const newListing = await response.json();
+            console.log('New listing:', newListing); // Log the response
+
+            // Update state with new listing
+            setListings(prev => [newListing, ...prev]);
+            setPreviewImages([]);
+            setUploadedFiles([]);
+            reset();
+
+        } catch (error) {
+            console.error('Error submitting listing:', error);
+            alert('Error submitting listing. Please try again.');
+        }
+    };
+
+    // Add delete functionality
+    const handleDelete = async (listingId) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/listings/${listingId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}` // Add auth token if required
+                }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json(); // Parse error response
+                throw new Error(errorData.message || 'Failed to delete listing');
+            }
+
+            // Remove from local state
+            setListings(prev => prev.filter(listing => listing._id !== listingId));
+        } catch (error) {
+            console.error('Error deleting listing:', error);
+            alert('Error deleting listing. Please try again.');
+        }
+    };
+
+    useEffect(() => {
+        if (listings.length > 0) {
+            console.log('Listing images:', listings.map(listing => listing.images));
+            console.log('Sample image URL:', getImageUrl(listings[0].images[0]));
+        }
+    }, [listings]);
+
+    // Update image URLs to include /uploads/ path
+    const getImageUrl = (imagePath) => {
+        if (!imagePath) return '/placeholder.jpg';
+        
+        // Extract just the filename from the absolute path
+        const filename = imagePath.split('\\').pop().split('/').pop();
+        return `http://localhost:5000/uploads/${filename}`;
     };
 
     const formVariants = {
@@ -55,6 +148,7 @@ const SellStubble = () => {
                         exit="exit"
                     >
                         <div className="space-y-6">
+                            {/* Crop Type Field */}
                             <div>
                                 <label className="block text-lg font-medium text-green-800 mb-2">
                                     Crop Type
@@ -76,6 +170,7 @@ const SellStubble = () => {
                                 )}
                             </div>
 
+                            {/* Price Per Quintal Field */}
                             <div>
                                 <label className="block text-lg font-medium text-green-800 mb-2">
                                     Price Per Quintal (₹)
@@ -96,6 +191,7 @@ const SellStubble = () => {
                                 )}
                             </div>
 
+                            {/* Available Quantity Field */}
                             <div>
                                 <label className="block text-lg font-medium text-green-800 mb-2">
                                     Available Quantity (Quintal)
@@ -113,6 +209,7 @@ const SellStubble = () => {
                                 )}
                             </div>
 
+                            {/* Description Field */}
                             <div>
                                 <label className="block text-lg font-medium text-green-800 mb-2">
                                     Description
@@ -129,6 +226,43 @@ const SellStubble = () => {
                                 )}
                             </div>
 
+                            {/* Seller Name Field */}
+                            <div>
+                                <label className="block text-lg font-medium text-green-800 mb-2">
+                                    Seller Name
+                                </label>
+                                <input
+                                    type="text"
+                                    {...register("sellerName", { required: true })}
+                                    className="w-full p-3 rounded-lg border-2 border-green-200 focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                                    placeholder="Enter your name"
+                                />
+                                {errors.sellerName && (
+                                    <p className="text-red-500 mt-1 flex items-center">
+                                        <FiInfo className="mr-1" /> Seller name is required
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Location Field */}
+                            <div>
+                                <label className="block text-lg font-medium text-green-800 mb-2">
+                                    Location
+                                </label>
+                                <input
+                                    type="text"
+                                    {...register("location", { required: true })}
+                                    className="w-full p-3 rounded-lg border-2 border-green-200 focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                                    placeholder="Enter your location (City, State)"
+                                />
+                                {errors.location && (
+                                    <p className="text-red-500 mt-1 flex items-center">
+                                        <FiInfo className="mr-1" /> Location is required
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Upload Photos Field */}
                             <div>
                                 <label className="block text-lg font-medium text-green-800 mb-2">
                                     Upload Photos
@@ -169,6 +303,7 @@ const SellStubble = () => {
                                 </div>
                             </div>
 
+                            {/* Submit Button */}
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -189,19 +324,32 @@ const SellStubble = () => {
                         <AnimatePresence>
                             {listings.map((listing) => (
                                 <motion.div
-                                    key={listing.id}
+                                    key={listing._id}
                                     initial={{ opacity: 0, x: 50 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -50 }}
-                                    className="bg-white rounded-2xl shadow-lg p-6"
+                                    className="bg-white rounded-2xl shadow-lg p-6 relative"
                                 >
+                                    {/* Delete Button */}
+                                    <button
+                                        onClick={() => handleDelete(listing._id)}
+                                        className="absolute top-4 right-4 text-red-500 hover:text-red-700"
+                                    >
+                                        <FiTrash2 className="w-6 h-6" />
+                                    </button>
+
                                     <div className="flex gap-4">
                                         {listing.images[0] && (
                                             <img
-                                                src={listing.images[0]}
-                                                alt="Stubble"
-                                                className="w-32 h-32 rounded-lg object-cover"
-                                            />
+                                            src={getImageUrl(listing.images[0])}
+                                            alt="Stubble"
+                                            className="w-32 h-32 rounded-lg object-cover"
+                                            onError={(e) => {
+                                                console.error('Image failed to load:', e.target.src);
+                                                // Use a data URI for a simple placeholder
+                                                e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3Ctext x='50' y='50' font-family='Arial' font-size='12' text-anchor='middle' dominant-baseline='middle' fill='%23aaa'%3ENo Image%3C/text%3E%3C/svg%3E";
+                                            }}
+                                        />
                                         )}
                                         <div className="flex-1">
                                             <h3 className="text-xl font-semibold text-green-800 capitalize">
@@ -224,7 +372,7 @@ const SellStubble = () => {
                                                 </div>
                                             </div>
                                             <p className="text-sm text-gray-400 mt-2">
-                                                Listed on: {listing.date}
+                                                Listed on: {new Date(listing.date).toLocaleDateString()}
                                             </p>
                                         </div>
                                     </div>
