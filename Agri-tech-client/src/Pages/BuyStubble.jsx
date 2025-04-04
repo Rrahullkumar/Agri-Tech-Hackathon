@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaRupeeSign, FaShoppingCart, FaLeaf, FaStar } from 'react-icons/fa';
+import { FaRupeeSign, FaShoppingCart, FaLeaf, FaStar, FaShoppingBasket } from 'react-icons/fa';
 import { FiInfo } from 'react-icons/fi';
 
 const BuyStubble = () => {
@@ -8,6 +8,10 @@ const BuyStubble = () => {
   const [quantity, setQuantity] = useState(1);
   const [stubbles, setStubbles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cartItems, setCartItems] = useState([]);
+
+  // Calculate total items in cart
+  const cartTotal = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const fetchStubbles = async () => {
@@ -17,8 +21,6 @@ const BuyStubble = () => {
 
         const getImageUrl = (imagePath) => {
           if (!imagePath) return '/default-stubble.jpg';
-
-          // Extract just the filename from the absolute path
           const filename = imagePath.split('\\').pop().split('/').pop();
           return `http://localhost:5000/uploads/${filename}`;
         };
@@ -33,9 +35,8 @@ const BuyStubble = () => {
           seller: listing.sellerName,
           location: listing.location,
           date: new Date(listing.date).toLocaleDateString(),
-          // These fields can be added to your backend model if needed
-          rating: 4.5 + Math.random() * 0.5, // Random rating for demo
-          organic: Math.random() > 0.5 // Random organic flag for demo
+          rating: 4.5 + Math.random() * 0.5,
+          organic: Math.random() > 0.5
         }));
 
         setStubbles(transformedData);
@@ -49,33 +50,36 @@ const BuyStubble = () => {
     fetchStubbles();
   }, []);
 
-  const addToCart = async (stubble) => {
-    try {
-      const response = await fetch('http://localhost:5000/api/cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          stubbleId: stubble._id,
-          quantity,
-          price: stubble.price
-        })
-      });
-
-      if (!response.ok) throw new Error('Failed to add to cart');
-
-      alert(`Added ${quantity} ton(s) of ${stubble.title} to cart!`);
-      setSelectedStubble(null);
-      setQuantity(1);
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-      alert('Error adding to cart. Please try again.');
+  const addToCart = (stubble) => {
+    const existingItem = cartItems.find(item => item._id === stubble._id);
+    
+    if (existingItem) {
+      setCartItems(prev => prev.map(item => 
+        item._id === stubble._id 
+          ? { ...item, quantity: item.quantity + quantity } 
+          : item
+      ));
+    } else {
+      setCartItems(prev => [...prev, {
+        ...stubble,
+        quantity: quantity,
+        totalPrice: stubble.price * quantity
+      }]);
     }
+
+    alert(`Added ${quantity} quintal(s) of ${stubble.title} to cart!`);
+    setSelectedStubble(null);
+    setQuantity(1);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-cyan-50 py-12 px-4 sm:px-6 lg:px-8 pt-20">
+      {/* Cart Indicator */}
+      <div className="fixed top-20 right-4 z-50 flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+        <FaShoppingBasket className="text-green-600" />
+        <span className="font-semibold text-green-700">{cartTotal}</span>
+      </div>
+
       <div className="max-w-7xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}

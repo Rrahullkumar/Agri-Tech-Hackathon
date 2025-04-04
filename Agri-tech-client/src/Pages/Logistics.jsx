@@ -67,7 +67,7 @@ const Logistics = () => {
           className="text-4xl font-bold text-green-900 mb-8 flex items-center gap-4"
         >
           <FaTruckMoving className="text-green-600" />
-          Logistics Dashboard
+          User Dashboard
         </motion.h1>
 
         {/* Stats Cards */}

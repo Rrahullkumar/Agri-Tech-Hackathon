@@ -54,7 +54,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/workshop-demo" element={<WorkshopDemo />} />
-        <Route path="/Chat-bot" element={<Chatbot />} />
+        {/* <Route path="/Chat-bot" element={<Chatbot />} /> */}
         <Route path="/signup" element={<SellerLogin />} />
       </Routes>
 

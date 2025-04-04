@@ -115,7 +115,7 @@ const Navbar = () => {
                   to="/logistics"
                   className="dropdown-item block px-4 py-2 text-gray-700 hover:bg-green-50"
                 >
-                  Logistics
+                  Dashboard
                 </Link>
               </div>
             )}
@@ -133,9 +133,9 @@ const Navbar = () => {
           <Link to="/workshop-Demo" className="nav-link">
             Workshop and demo
           </Link>
-          <Link to="/Chat-bot" className="nav-link">
+          {/* <Link to="/Chat-bot" className="nav-link">
             Chat bot
-          </Link>
+          </Link> */}
         </div>
 
         {/* Login Dropdown */}
