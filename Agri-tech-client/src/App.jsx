@@ -17,6 +17,7 @@ import WorkshopDemo from "./Pages/Workshop-Demo";
 import Chatbot from "./Pages/Chat-bot";  
 import AIBot from "./Components/AIbot";
 import "./i18.js";
+import EditProfile from "./Pages/EditProfile.jsx";
 
 const DummyPage = ({ title }) => (
   <div className="min-h-screen flex items-center justify-center text-3xl font-bold bg-green-50">
@@ -54,6 +55,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/workshop-demo" element={<WorkshopDemo />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
         {/* <Route path="/Chat-bot" element={<Chatbot />} /> */}
         <Route path="/signup" element={<SellerLogin />} />
       </Routes>

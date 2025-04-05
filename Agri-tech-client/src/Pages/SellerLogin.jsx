@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FaUser, FaLock, FaPhone, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const SellerLogin = () => {
+  const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -11,9 +13,43 @@ const SellerLogin = () => {
     address: "",
   });
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  // };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const endpoint = isRegister ? '/api/sellers/register' : '/api/sellers/login';
+      const response = await fetch(`http://localhost:5000${endpoint}`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      const data = await response.json();
+      
+      if (!response.ok) {
+        console.log('Detailed error:', data); // Add this line
+        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+      }
+  
+      if (!isRegister) {
+        localStorage.setItem('seller', JSON.stringify(data.seller));
+        navigate('/sell-stubble');
+      } else {
+        alert('Registration successful! Please login.');
+        setIsRegister(false);
+      }
+    } catch (error) {
+      console.error('Full error:', error);
+      alert(error.message);
+    }
   };
 
   const handleChange = (e) => {

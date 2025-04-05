@@ -105,3 +105,36 @@
 .form-input:focus {
   @apply shadow-md;
 }
+
+.translate-widget {
+  border: 1px solid #d1fae5;
+  border-radius: 8px;
+  padding: 4px 8px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+.goog-te-banner-frame.skiptranslate,
+.goog-logo-link,
+.goog-te-gadget span {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+}
+
+.goog-te-combo {
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #10b981;
+  font-weight: 500;
+  background-color: #f0fdf4;
+  color: #065f46;
+}
