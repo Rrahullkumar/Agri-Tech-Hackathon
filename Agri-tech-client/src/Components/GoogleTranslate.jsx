@@ -1,4 +1,3 @@
-// src/components/GoogleTranslate.js
 import React, { useEffect } from "react";
 
 const GoogleTranslate = () => {

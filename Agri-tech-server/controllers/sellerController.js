@@ -27,7 +27,6 @@ export const registerSeller = async (req, res) => {
 };
 
 // Login seller
-// sellerController.js
 export const loginSeller = async (req, res) => {
   const { email, password } = req.body;
 
