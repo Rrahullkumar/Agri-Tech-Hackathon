@@ -3,11 +3,14 @@ import React, { useEffect } from "react";
 const GoogleTranslate = () => {
   useEffect(() => {
     const addScript = () => {
-      const script = document.createElement("script");
-      script.src =
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
+      if (!document.querySelector("#google-translate-script")) {
+        const script = document.createElement("script");
+        script.id = "google-translate-script";
+        script.src =
+          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        script.async = true;
+        document.body.appendChild(script);
+      }
     };
 
     window.googleTranslateElementInit = () => {
@@ -18,6 +21,14 @@ const GoogleTranslate = () => {
         },
         "google_translate_element"
       );
+
+      // Hide Google logo after short delay
+      setTimeout(() => {
+        const googleLogo = document.querySelector(
+          "#google_translate_element span.glogo"
+        );
+        if (googleLogo) googleLogo.style.display = "none";
+      }, 1000);
     };
 
     addScript();
