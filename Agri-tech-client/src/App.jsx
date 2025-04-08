@@ -47,7 +47,7 @@ function App() {
         {/* Other Routes */}
         <Route path="/seller-login" element={<SellerLogin />} />
         <Route path="/buyer-login" element={<BuyerLogin />} />
-        <Route path="/logistics-login" element={<LogisticsLogin />} />
+        {/* <Route path="/logistics-login" element={<LogisticsLogin />} /> */}
         <Route path="/sell-stubble" element={<SellStubble />} />
         <Route path="/buy-stubble" element={<BuyStubble />} />
         <Route path="/logistics" element={<Logistics />} />

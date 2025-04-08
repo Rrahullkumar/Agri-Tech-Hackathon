@@ -176,12 +176,12 @@ const Navbar = () => {
               >
                 Buyer Login
               </Link>
-              <Link
+              {/* <Link
                 to="/logistics-login"
                 className="dropdown-item block px-4 py-2 text-gray-700 hover:bg-green-50"
               >
                 Logistics Login
-              </Link>
+              </Link> */}
             </div>
           )}
         </div>
