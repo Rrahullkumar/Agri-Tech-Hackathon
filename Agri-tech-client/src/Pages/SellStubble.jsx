@@ -11,11 +11,18 @@ const SellStubble = () => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [listings, setListings] = useState([]);
 
+
+    // Determine base URL based on current environment
+    const isLocal = window.location.hostname === 'localhost' || window.location.href.includes('localhost');
+    const API_BASE_URL = isLocal 
+        ? 'http://localhost:5000' 
+        : 'https://agri-tech-hackathon-hiec.vercel.app';
+
     // Fetch existing listings on component mount
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/listings');
+                const response = await fetch(`${API_BASE_URL}/api/listings`);
                 const data = await response.json();
                 setListings(data);
             } catch (error) {
@@ -55,7 +62,7 @@ const SellStubble = () => {
                 console.log('Image file:', file); // Log image files
             });
 
-            const response = await fetch('http://localhost:5000/api/listings', {
+            const response = await fetch(`${API_BASE_URL}/api/listings`, {
                 method: 'POST',
                 body: formData
             });
@@ -84,7 +91,7 @@ const SellStubble = () => {
     // Add delete functionality
     const handleDelete = async (listingId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/listings/${listingId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}` // Add auth token if required
@@ -117,7 +124,7 @@ const SellStubble = () => {
 
         // Extract just the filename from the absolute path
         const filename = imagePath.split('\\').pop().split('/').pop();
-        return `http://localhost:5000/uploads/${filename}` ;
+        return `${API_BASE_URL}/uploads/${filename}` ;
     };
 
     const formVariants = {
