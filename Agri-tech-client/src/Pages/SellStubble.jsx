@@ -56,7 +56,7 @@ const SellStubble = () => {
                 console.log('Image file:', file); // Log image files
             });
 
-            const response = await fetch('http://localhost:5000/api/listings' || `${BASE_URL}//api/listings`, {
+            const response = await fetch('http://localhost:5000/api/listings' || `${BASE_URL}/api/listings`, {
                 method: 'POST',
                 body: formData
             });
