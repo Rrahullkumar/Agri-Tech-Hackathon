@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaRupeeSign, FaShoppingCart, FaLeaf, FaStar, FaShoppingBasket } from 'react-icons/fa';
 import { FiInfo } from 'react-icons/fi';
-import BASE_URL from '../baseUrl';
 
 const BuyStubble = () => {
   const [selectedStubble, setSelectedStubble] = useState(null);
@@ -17,13 +16,13 @@ const BuyStubble = () => {
   useEffect(() => {
     const fetchStubbles = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/listings' || `${BASE_URL}/api/listings`);
+        const response = await fetch('http://localhost:5000/api/listings');
         const data = await response.json();
 
         const getImageUrl = (imagePath) => {
           if (!imagePath) return '/default-stubble.jpg';
           const filename = imagePath.split('\\').pop().split('/').pop();
-          return `http://localhost:5000/uploads/${filename}`|| `${BASE_URL}/uploads/${filename}`;
+          return `http://localhost:5000/uploads/${filename}`;
         };
 
         const transformedData = data.map(listing => ({
