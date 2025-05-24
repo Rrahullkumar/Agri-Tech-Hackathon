@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { AnimatePresence } from 'framer-motion';
 import { FiUploadCloud, FiInfo, FiTrash2 } from 'react-icons/fi';
 import { MdCurrencyRupee } from 'react-icons/md';
+import BASE_URL from '../baseUrl';
 
 const SellStubble = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -15,7 +16,7 @@ const SellStubble = () => {
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/listings');
+                const response = await fetch('http://localhost:5000/api/listings' || `${BASE_URL}/api/listings`);
                 const data = await response.json();
                 setListings(data);
             } catch (error) {
@@ -55,7 +56,7 @@ const SellStubble = () => {
                 console.log('Image file:', file); // Log image files
             });
 
-            const response = await fetch('http://localhost:5000/api/listings', {
+            const response = await fetch('http://localhost:5000/api/listings' || `${BASE_URL}//api/listings`, {
                 method: 'POST',
                 body: formData
             });
@@ -84,7 +85,7 @@ const SellStubble = () => {
     // Add delete functionality
     const handleDelete = async (listingId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/listings/${listingId}`, {
+            const response = await fetch(`http://localhost:5000/api/listings/${listingId}` || `${BASE_URL}/api/listings/${listingId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}` // Add auth token if required
@@ -117,7 +118,7 @@ const SellStubble = () => {
 
         // Extract just the filename from the absolute path
         const filename = imagePath.split('\\').pop().split('/').pop();
-        return `http://localhost:5000/uploads/${filename}`;
+        return `http://localhost:5000/uploads/${filename}` || `${BASE_URL}/uploads/${filename}` ;
     };
 
     const formVariants = {

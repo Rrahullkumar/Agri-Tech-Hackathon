@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaRupeeSign, FaShoppingCart, FaLeaf, FaStar, FaShoppingBasket } from 'react-icons/fa';
 import { FiInfo } from 'react-icons/fi';
+import BASE_URL from '../baseUrl';
 
 const BuyStubble = () => {
   const [selectedStubble, setSelectedStubble] = useState(null);
