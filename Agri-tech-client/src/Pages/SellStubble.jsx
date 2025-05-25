@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { AnimatePresence } from 'framer-motion';
 import { FiUploadCloud, FiInfo, FiTrash2 } from 'react-icons/fi';
 import { MdCurrencyRupee } from 'react-icons/md';
+import BannerWithPagination from './BannerWithPagination';
 
 const SellStubble = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -14,8 +15,8 @@ const SellStubble = () => {
 
     // Determine base URL based on current environment
     const isLocal = window.location.hostname === 'localhost' || window.location.href.includes('localhost');
-    const API_BASE_URL = isLocal 
-        ? 'http://localhost:5000' 
+    const API_BASE_URL = isLocal
+        ? 'http://localhost:5000'
         : 'https://agri-tech-hackathon-hiec.vercel.app';
 
     // Fetch existing listings on component mount
@@ -124,7 +125,7 @@ const SellStubble = () => {
 
         // Extract just the filename from the absolute path
         const filename = imagePath.split('\\').pop().split('/').pop();
-        return `${API_BASE_URL}/uploads/${filename}` ;
+        return `${API_BASE_URL}/uploads/${filename}`;
     };
 
     const formVariants = {
@@ -133,48 +134,12 @@ const SellStubble = () => {
         exit: { opacity: 0, y: -20 }
     };
 
+
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-green-50 to-emerald-100 py-12 px-4 sm:px-6 lg:px-8 pt-20">
 
-            <div>
-                <div className="text-center text-3xl font-bold text-green-900 mb-6">
-                    Know the Best Price for Your Stubble
-                </div>
-
-                {/* Banner */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="relative bg-gradient-to-r from-yellow-400 via-green-500 to-green-700 rounded-3xl shadow-xl p-8 mb-12 text-white overflow-hidden mx-4"
-                >
-                    <div
-                        className="absolute inset-0 opacity-30 bg-cover bg-center rounded-3xl"
-                        style={{
-                            backgroundImage:
-                                "url(https://images.unsplash.com/photo-1578329848253-02ad2083c202)",
-                        }}
-                    ></div>
-
-                    <div className="relative z-10">
-                        <h2 className="text-4xl font-extrabold text-center mb-4 drop-shadow-lg">
-                            Get the Best Value for Your Stubble!
-                        </h2>
-                        <p className="text-lg text-center mb-6 drop-shadow-md">
-                            Use our AI-powered tool to predict the optimal price for your stubble and maximize your profit.
-                        </p>
-                        <div className="flex justify-center">
-                            <button
-                                onClick={() => window.location.href = "https://stubble-price-prediction.streamlit.app/"}
-                                className="bg-white text-green-700 font-semibold py-3 px-8 rounded-full shadow-md hover:bg-green-100 transition ease-in-out duration-300 hover:cursor-pointer"
-                            >
-                                Predict Price Now
-                            </button>
-                            {/* Add link integration here */}
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
-
+            <BannerWithPagination/>   
 
             <div className="max-w-7xl mx-auto">
                 <motion.h1
