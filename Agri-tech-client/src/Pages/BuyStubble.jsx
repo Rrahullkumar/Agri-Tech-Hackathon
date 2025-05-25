@@ -14,63 +14,69 @@ const BuyStubble = () => {
   const cartTotal = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
-    const fetchStubbles = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/listings');
-        const data = await response.json();
+  const fetchStubbles = async () => {
+    try {
+      // Determine base URL based on current environment
+      const isLocal = window.location.hostname === 'localhost';
+      const API_BASE_URL = isLocal 
+        ? 'http://localhost:5000' 
+        : 'https://agri-tech-hackathon-hiec.vercel.app';
 
-        const getImageUrl = (imagePath) => {
-          if (!imagePath) return '/default-stubble.jpg';
-          const filename = imagePath.split('\\').pop().split('/').pop();
-          return `http://localhost:5000/uploads/${filename}`;
-        };
+      const response = await fetch(`${API_BASE_URL}/api/listings`);
+      const data = await response.json();
 
-        const transformedData = data.map(listing => ({
-          _id: listing._id,
-          title: `${listing.cropType.charAt(0).toUpperCase() + listing.cropType.slice(1)} Stubble`,
-          description: listing.description,
-          image: listing.images[0] ? getImageUrl(listing.images[0]) : '/default-stubble.jpg',
-          price: listing.price,
-          quantityAvailable: listing.quantity,
-          seller: listing.sellerName,
-          location: listing.location,
-          date: new Date(listing.date).toLocaleDateString(),
-          rating: 4.5 + Math.random() * 0.5,
-          organic: Math.random() > 0.5
-        }));
+      const getImageUrl = (imagePath) => {
+        if (!imagePath) return '/default-stubble.jpg';
+        const filename = imagePath.split('\\').pop().split('/').pop();
+        return `${API_BASE_URL}/uploads/${filename}`;
+      };
 
-        setStubbles(transformedData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching stubbles:', error);
-        setLoading(false);
-      }
-    };
+      const transformedData = data.map(listing => ({
+        _id: listing._id,
+        title: `${listing.cropType.charAt(0).toUpperCase() + listing.cropType.slice(1)} Stubble`,
+        description: listing.description,
+        image: listing.images[0] ? getImageUrl(listing.images[0]) : '/default-stubble.jpg',
+        price: listing.price,
+        quantityAvailable: listing.quantity,
+        seller: listing.sellerName,
+        location: listing.location,
+        date: new Date(listing.date).toLocaleDateString(),
+        rating: 4.5 + Math.random() * 0.5,
+        organic: Math.random() > 0.5
+      }));
 
-    fetchStubbles();
-  }, []);
-
-  const addToCart = (stubble) => {
-    const existingItem = cartItems.find(item => item._id === stubble._id);
-    
-    if (existingItem) {
-      setCartItems(prev => prev.map(item => 
-        item._id === stubble._id 
-          ? { ...item, quantity: item.quantity + quantity } 
-          : item
-      ));
-    } else {
-      setCartItems(prev => [...prev, {
-        ...stubble,
-        quantity: quantity,
-        totalPrice: stubble.price * quantity
-      }]);
+      setStubbles(transformedData);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching stubbles:', error);
+      setLoading(false);
     }
-
-    alert(`Added ${quantity} quintal(s) of ${stubble.title} to cart!`);
-    setSelectedStubble(null);
-    setQuantity(1);
   };
+
+  fetchStubbles();
+}, []);
+
+const addToCart = (stubble) => {
+  const existingItem = cartItems.find(item => item._id === stubble._id);
+  
+  if (existingItem) {
+    setCartItems(prev => prev.map(item => 
+      item._id === stubble._id 
+        ? { ...item, quantity: item.quantity + quantity } 
+        : item
+    ));
+  } else {
+    setCartItems(prev => [...prev, {
+      ...stubble,
+      quantity: quantity,
+      totalPrice: stubble.price * quantity
+    }]);
+  }
+
+  alert(`Added ${quantity} quintal(s) of ${stubble.title} to cart!`);
+  setSelectedStubble(null);
+  setQuantity(1);
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-cyan-50 py-12 px-4 sm:px-6 lg:px-8 pt-20">
